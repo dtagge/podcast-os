@@ -11,7 +11,7 @@ import {
   createMockEpisodeBrief,
   createMockSlides,
 } from "@/lib/mockGeneration";
-import type { EpisodeBrief, Slide } from "@/lib/schemas";
+import type { Episode, EpisodeBrief, Slide } from "@/lib/schemas";
 
 export default function BuilderPage() {
   const [title, setTitle] = useState("The future of podcast workflows");
@@ -29,6 +29,9 @@ export default function BuilderPage() {
   );
   const [brief, setBrief] = useState<EpisodeBrief | null>(null);
   const [slides, setSlides] = useState<Slide[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState<string | null>(null);
+  const [savedUrl, setSavedUrl] = useState<string | null>(null);
 
   function generateMockEpisode() {
     const nextBrief = createMockEpisodeBrief({
@@ -41,6 +44,41 @@ export default function BuilderPage() {
 
     setBrief(nextBrief);
     setSlides(createMockSlides(nextBrief));
+    setSaveMessage(null);
+    setSavedUrl(null);
+  }
+
+  async function saveLocalEpisode() {
+    if (!brief || slides.length === 0) {
+      setSaveMessage("Generate a mock brief before saving.");
+      return;
+    }
+
+    setIsSaving(true);
+    setSaveMessage(null);
+
+    const episode: Episode = { brief, slides };
+    const response = await fetch("/api/episodes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ episode }),
+    });
+
+    const payload = (await response.json()) as {
+      error?: string;
+      path?: string;
+      url?: string;
+    };
+
+    setIsSaving(false);
+
+    if (!response.ok) {
+      setSaveMessage(payload.error ?? "Unable to save local episode.");
+      return;
+    }
+
+    setSavedUrl(payload.url ?? null);
+    setSaveMessage(`Saved to ${payload.path}.`);
   }
 
   return (
@@ -60,10 +98,10 @@ export default function BuilderPage() {
             </p>
           </div>
           <Link
-            href="/episodes/future-of-podcast-workflows"
+            href="/episodes"
             className="rounded-md border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-950 transition hover:border-zinc-400"
           >
-            View Example
+            Browse Episodes
           </Link>
         </header>
 
@@ -89,8 +127,18 @@ export default function BuilderPage() {
             urls={urls}
             transcript={transcript}
             onGenerate={generateMockEpisode}
+            onSave={saveLocalEpisode}
+            canSave={Boolean(brief && slides.length > 0)}
+            isSaving={isSaving}
+            savedUrl={savedUrl}
           />
         </div>
+
+        {saveMessage ? (
+          <div className="mt-4 rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-700 shadow-sm">
+            {saveMessage}
+          </div>
+        ) : null}
 
         <section className="mt-8 grid gap-6 lg:grid-cols-[1fr_380px]">
           <div>

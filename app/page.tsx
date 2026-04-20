@@ -42,6 +42,12 @@ export default function Home() {
               >
                 View Example Episode
               </Link>
+              <Link
+                href="/episodes"
+                className="rounded-md border border-zinc-300 bg-white px-5 py-3 text-sm font-semibold text-zinc-950 transition hover:border-zinc-400"
+              >
+                Browse Local Episodes
+              </Link>
             </div>
           </div>
 

@@ -12,6 +12,8 @@ The current MVP is mock-driven on purpose. It lets a producer enter an episode t
 - Converts the mock brief into mock `Slide` data.
 - Renders slides with next/previous navigation.
 - Shows a local source list below the presentation.
+- Saves generated local episodes into `data/episodes`.
+- Provides an episode browser at `/episodes`.
 - Renders an example local episode from `data/episodes`.
 - Exposes mock API routes for future generation wiring.
 
@@ -40,6 +42,7 @@ Useful routes:
 
 - `/` for the product overview.
 - `/builder` for the local episode builder.
+- `/episodes` for saved local episodes.
 - `/episodes/future-of-podcast-workflows` for the example presentation.
 
 ## Verification
@@ -70,13 +73,45 @@ curl -X POST http://localhost:3000/api/generate-brief \
   }'
 ```
 
+Save a mock episode after generating one in the UI, or call the local episode API directly:
+
+```bash
+curl -X POST http://localhost:3000/api/episodes \
+  -H "Content-Type: application/json" \
+  -d '{
+    "episode": {
+      "brief": {
+        "slug": "api-saved-test",
+        "title": "API Saved Test",
+        "thesis": "Saving local JSON makes the workflow durable.",
+        "audience": "Podcast producers",
+        "summary": "A short saved episode test.",
+        "keyQuestions": ["What should be saved?"],
+        "narrativeBeats": ["Generate", "Save", "Open"],
+        "sources": [],
+        "createdAt": "2026-04-20T12:00:00.000Z",
+        "updatedAt": "2026-04-20T12:00:00.000Z"
+      },
+      "slides": [
+        {
+          "id": "slide-1",
+          "title": "Saved deck",
+          "body": "This deck was written to local JSON."
+        }
+      ]
+    }
+  }'
+```
+
 ## Project Structure
 
 ```txt
 app/
   page.tsx
   builder/page.tsx
+  episodes/page.tsx
   episodes/[slug]/page.tsx
+  api/episodes/route.ts
   api/generate-brief/route.ts
   api/generate-slides/route.ts
 
@@ -115,14 +150,15 @@ These types live in `lib/schemas.ts`.
 - Render navigable slide previews.
 - Show local source lists.
 - Keep sample episodes in JSON.
+- Save generated episodes to local JSON.
+- Browse saved local episodes.
 
 ### Phase 2: Durable Local Workspace
 
-- Save drafts from the builder into `data/episodes`.
-- Add an episode index page.
 - Load and edit existing local episode files.
 - Add JSON schema validation for local files and API responses.
 - Add import/export for briefs and slide decks.
+- Add overwrite protection and duplicate handling for saved slugs.
 
 ### Phase 3: AI-Assisted Generation
 

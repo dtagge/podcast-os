@@ -7,6 +7,10 @@ type EpisodePublisherProps = {
   urls: string;
   transcript: string;
   onGenerate: () => void;
+  onSave: () => void;
+  canSave: boolean;
+  isSaving: boolean;
+  savedUrl: string | null;
 };
 
 export function EpisodePublisher({
@@ -16,6 +20,10 @@ export function EpisodePublisher({
   urls,
   transcript,
   onGenerate,
+  onSave,
+  canSave,
+  isSaving,
+  savedUrl,
 }: EpisodePublisherProps) {
   const sourceCount =
     urls
@@ -59,9 +67,25 @@ export function EpisodePublisher({
       >
         Generate Mock Brief
       </button>
+      <button
+        type="button"
+        onClick={onSave}
+        disabled={!canSave || isSaving}
+        className="mt-3 w-full rounded-md border border-white/20 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-45"
+      >
+        {isSaving ? "Saving..." : "Save Local Episode"}
+      </button>
+      {savedUrl ? (
+        <a
+          href={savedUrl}
+          className="mt-3 block rounded-md bg-white px-4 py-3 text-center text-sm font-semibold text-zinc-950 transition hover:bg-zinc-100"
+        >
+          Open Saved Deck
+        </a>
+      ) : null}
       <p className="mt-3 text-xs leading-5 text-zinc-400">
-        This stays local-first and mock-driven. Generation happens in browser
-        state using the shared mock schemas.
+        This stays local-first and mock-driven. Save writes a JSON episode file
+        into data/episodes.
       </p>
     </aside>
   );
