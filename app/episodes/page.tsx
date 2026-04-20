@@ -32,22 +32,22 @@ export default async function EpisodesPage() {
   return (
     <main className="min-h-screen px-6 py-8">
       <div className="mx-auto max-w-6xl">
-        <header className="mb-8 flex flex-col justify-between gap-4 border-b border-zinc-200 pb-6 sm:flex-row sm:items-end">
+        <header className="mb-8 flex flex-col justify-between gap-4 border-b border-light-navy pb-6 sm:flex-row sm:items-end">
           <div>
-            <Link href="/" className="text-sm font-medium text-teal-700">
+            <Link href="/" className="text-sm font-medium text-gold">
               podcast-os
             </Link>
-            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-zinc-950">
+            <h1 className="mt-3 text-4xl font-serif font-semibold tracking-tight text-charcoal">
               Local Episodes
             </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-slate">
               Browse locally saved mock briefs and web-native slide decks from
               the data/episodes folder.
             </p>
           </div>
           <Link
             href="/builder"
-            className="rounded-md bg-zinc-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800"
+            className="rounded-md bg-navy px-4 py-2 text-sm font-semibold text-warm-white transition hover:bg-navy-light"
           >
             New Episode
           </Link>
@@ -59,21 +59,21 @@ export default async function EpisodesPage() {
               <Link
                 key={episode.brief.slug}
                 href={`/episodes/${episode.brief.slug}`}
-                className="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm transition hover:border-zinc-300 hover:shadow-md"
+                className="rounded-lg border border-light-navy bg-light-gold p-5 shadow-sm transition hover:border-gold hover:shadow-md"
               >
                 <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
                   <div>
-                    <p className="text-xs font-semibold tracking-[0.18em] text-teal-700 uppercase">
+                    <p className="text-xs font-semibold tracking-[0.18em] text-gold uppercase">
                       {episode.slides.length} slides
                     </p>
-                    <h2 className="mt-2 text-xl font-semibold text-zinc-950">
+                    <h2 className="mt-2 text-xl font-serif font-semibold text-charcoal">
                       {episode.brief.title}
                     </h2>
-                    <p className="mt-2 max-w-3xl text-sm leading-6 text-zinc-600">
+                    <p className="mt-2 max-w-3xl text-sm leading-6 text-slate">
                       {episode.brief.summary}
                     </p>
                   </div>
-                  <p className="shrink-0 text-sm text-zinc-500">
+                  <p className="shrink-0 text-sm text-slate">
                     {new Date(episode.brief.updatedAt).toLocaleDateString()}
                   </p>
                 </div>
@@ -81,8 +81,8 @@ export default async function EpisodesPage() {
             ))}
           </div>
         ) : (
-          <section className="rounded-lg border border-dashed border-zinc-300 bg-white p-8 text-center">
-            <p className="text-sm text-zinc-500">
+          <section className="rounded-lg border border-dashed border-muted bg-light-gold p-8 text-center">
+            <p className="text-sm text-slate">
               No local episodes yet. Create and save one from the builder.
             </p>
           </section>

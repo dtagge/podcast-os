@@ -84,22 +84,22 @@ export default function BuilderPage() {
   return (
     <main className="min-h-screen px-6 py-8">
       <div className="mx-auto max-w-7xl">
-        <header className="mb-8 flex flex-col justify-between gap-4 border-b border-zinc-200 pb-6 sm:flex-row sm:items-end">
+        <header className="mb-8 flex flex-col justify-between gap-4 border-b border-light-navy pb-6 sm:flex-row sm:items-end">
           <div>
-            <Link href="/" className="text-sm font-medium text-teal-700">
+            <Link href="/" className="text-sm font-medium text-gold">
               podcast-os
             </Link>
-            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-zinc-950">
+            <h1 className="mt-3 text-4xl font-serif font-semibold tracking-tight text-charcoal">
               Episode Builder
             </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-slate">
               Draft a brief from notes, source URLs, and transcript text before
               generating a web-native slide outline.
             </p>
           </div>
           <Link
             href="/episodes"
-            className="rounded-md border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-950 transition hover:border-zinc-400"
+            className="rounded-md border border-muted bg-light-gold px-4 py-2 text-sm font-semibold text-charcoal transition hover:border-gold"
           >
             Browse Episodes
           </Link>
@@ -135,7 +135,7 @@ export default function BuilderPage() {
         </div>
 
         {saveMessage ? (
-          <div className="mt-4 rounded-lg border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-700 shadow-sm">
+          <div className="mt-4 rounded-lg border border-light-navy bg-light-gold px-4 py-3 text-sm text-slate shadow-sm">
             {saveMessage}
           </div>
         ) : null}
@@ -144,15 +144,15 @@ export default function BuilderPage() {
           <div>
             <div className="mb-4 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
               <div>
-                <p className="text-xs font-semibold tracking-[0.18em] text-zinc-400 uppercase">
+                <p className="text-xs font-semibold tracking-[0.18em] text-muted uppercase">
                   Presentation
                 </p>
-                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-950">
+                <h2 className="mt-2 text-2xl font-serif font-semibold tracking-tight text-charcoal">
                   Mock slide deck
                 </h2>
               </div>
               {brief ? (
-                <p className="text-sm text-zinc-500">
+                <p className="text-sm text-slate">
                   Generated from brief: {brief.slug}
                 </p>
               ) : null}
@@ -161,23 +161,23 @@ export default function BuilderPage() {
           </div>
 
           <div className="grid gap-6">
-            <section className="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm">
-              <p className="text-xs font-semibold tracking-[0.18em] text-zinc-400 uppercase">
+            <section className="rounded-lg border border-light-navy bg-light-gold p-5 shadow-sm">
+              <p className="text-xs font-semibold tracking-[0.18em] text-muted uppercase">
                 EpisodeBrief
               </p>
               {brief ? (
                 <div className="mt-4 grid gap-4 text-sm">
                   <div>
-                    <p className="font-semibold text-zinc-950">{brief.title}</p>
-                    <p className="mt-2 leading-6 text-zinc-600">
+                    <p className="font-semibold text-charcoal">{brief.title}</p>
+                    <p className="mt-2 leading-6 text-slate">
                       {brief.summary}
                     </p>
                   </div>
                   <div>
-                    <p className="font-semibold text-zinc-950">
+                    <p className="font-semibold text-charcoal">
                       Key questions
                     </p>
-                    <ul className="mt-2 grid gap-2 text-zinc-600">
+                    <ul className="mt-2 grid gap-2 text-slate">
                       {brief.keyQuestions.map((question) => (
                         <li key={question}>{question}</li>
                       ))}
@@ -185,7 +185,7 @@ export default function BuilderPage() {
                   </div>
                 </div>
               ) : (
-                <p className="mt-4 text-sm leading-6 text-zinc-500">
+                <p className="mt-4 text-sm leading-6 text-slate">
                   Click Generate Mock Brief to populate a local EpisodeBrief and
                   convert it into slides.
                 </p>
