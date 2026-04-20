@@ -6,6 +6,7 @@ type EpisodePublisherProps = {
   notes: string;
   urls: string;
   transcript: string;
+  onGenerate: () => void;
 };
 
 export function EpisodePublisher({
@@ -14,6 +15,7 @@ export function EpisodePublisher({
   notes,
   urls,
   transcript,
+  onGenerate,
 }: EpisodePublisherProps) {
   const sourceCount =
     urls
@@ -52,13 +54,14 @@ export function EpisodePublisher({
       </dl>
       <button
         type="button"
+        onClick={onGenerate}
         className="mt-6 w-full rounded-md bg-teal-400 px-4 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-teal-300"
       >
-        Save Draft Locally
+        Generate Mock Brief
       </button>
       <p className="mt-3 text-xs leading-5 text-zinc-400">
-        This MVP shows the local-first shape. Browser-to-filesystem persistence
-        is intentionally left for the next pass.
+        This stays local-first and mock-driven. Generation happens in browser
+        state using the shared mock schemas.
       </p>
     </aside>
   );

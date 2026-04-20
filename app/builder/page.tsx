@@ -4,7 +4,14 @@ import { useState } from "react";
 import Link from "next/link";
 import { BriefEditor } from "@/components/BriefEditor";
 import { EpisodePublisher } from "@/components/EpisodePublisher";
+import { SlideRenderer } from "@/components/SlideRenderer";
+import { SourceList } from "@/components/SourceList";
 import { SourceIngestor } from "@/components/SourceIngestor";
+import {
+  createMockEpisodeBrief,
+  createMockSlides,
+} from "@/lib/mockGeneration";
+import type { EpisodeBrief, Slide } from "@/lib/schemas";
 
 export default function BuilderPage() {
   const [title, setTitle] = useState("The future of podcast workflows");
@@ -20,6 +27,21 @@ export default function BuilderPage() {
   const [transcript, setTranscript] = useState(
     "Host: The best production tools disappear into the workflow. Guest: Exactly. The brief should become the presentation without a copy-paste tax.",
   );
+  const [brief, setBrief] = useState<EpisodeBrief | null>(null);
+  const [slides, setSlides] = useState<Slide[]>([]);
+
+  function generateMockEpisode() {
+    const nextBrief = createMockEpisodeBrief({
+      title,
+      thesis,
+      notes,
+      urls,
+      transcript,
+    });
+
+    setBrief(nextBrief);
+    setSlides(createMockSlides(nextBrief));
+  }
 
   return (
     <main className="min-h-screen px-6 py-8">
@@ -66,8 +88,64 @@ export default function BuilderPage() {
             notes={notes}
             urls={urls}
             transcript={transcript}
+            onGenerate={generateMockEpisode}
           />
         </div>
+
+        <section className="mt-8 grid gap-6 lg:grid-cols-[1fr_380px]">
+          <div>
+            <div className="mb-4 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
+              <div>
+                <p className="text-xs font-semibold tracking-[0.18em] text-zinc-400 uppercase">
+                  Presentation
+                </p>
+                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-950">
+                  Mock slide deck
+                </h2>
+              </div>
+              {brief ? (
+                <p className="text-sm text-zinc-500">
+                  Generated from brief: {brief.slug}
+                </p>
+              ) : null}
+            </div>
+            <SlideRenderer slides={slides} />
+          </div>
+
+          <div className="grid gap-6">
+            <section className="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm">
+              <p className="text-xs font-semibold tracking-[0.18em] text-zinc-400 uppercase">
+                EpisodeBrief
+              </p>
+              {brief ? (
+                <div className="mt-4 grid gap-4 text-sm">
+                  <div>
+                    <p className="font-semibold text-zinc-950">{brief.title}</p>
+                    <p className="mt-2 leading-6 text-zinc-600">
+                      {brief.summary}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-zinc-950">
+                      Key questions
+                    </p>
+                    <ul className="mt-2 grid gap-2 text-zinc-600">
+                      {brief.keyQuestions.map((question) => (
+                        <li key={question}>{question}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ) : (
+                <p className="mt-4 text-sm leading-6 text-zinc-500">
+                  Click Generate Mock Brief to populate a local EpisodeBrief and
+                  convert it into slides.
+                </p>
+              )}
+            </section>
+            <SourceList sources={brief?.sources ?? []} />
+          </div>
+        </section>
       </div>
     </main>
   );

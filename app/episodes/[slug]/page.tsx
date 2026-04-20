@@ -3,6 +3,7 @@ import path from "node:path";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SlideRenderer } from "@/components/SlideRenderer";
+import { SourceList } from "@/components/SourceList";
 import type { Episode } from "@/lib/schemas";
 
 type EpisodePageProps = {
@@ -72,7 +73,10 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
           </div>
         </header>
 
-        <SlideRenderer slides={episode.slides} />
+        <div className="grid gap-6 lg:grid-cols-[1fr_380px]">
+          <SlideRenderer slides={episode.slides} />
+          <SourceList sources={episode.brief.sources} />
+        </div>
       </div>
     </main>
   );
