@@ -1,0 +1,71 @@
+{
+  "brief": {
+    "slug": "future-of-podcast-workflows",
+    "title": "The future of podcast workflows",
+    "thesis": "Podcast teams need local-first systems that turn research into briefs and briefs into presentations without scattering the production process across tools.",
+    "audience": "Independent producers, showrunners, and editorial teams",
+    "summary": "This episode explores why podcast production is moving from loose documents toward structured, portable workflows. The core argument is that teams can move faster when their notes, source material, episode brief, and presentation live in one local-first workspace.",
+    "keyQuestions": [
+      "Why do podcast teams lose momentum between research and production?",
+      "What should a structured episode brief contain?",
+      "How can web-native slides become part of the editorial workflow?"
+    ],
+    "narrativeBeats": [
+      "Production work starts with scattered notes and links.",
+      "A clear thesis gives every source a job.",
+      "Briefs become more valuable when they can immediately turn into presentations."
+    ],
+    "sources": [
+      {
+        "id": "source-1",
+        "type": "url",
+        "label": "Local-first software primer",
+        "content": "https://www.inkandswitch.com/local-first/",
+        "createdAt": "2026-04-20T12:00:00.000Z"
+      },
+      {
+        "id": "source-2",
+        "type": "note",
+        "label": "Producer note",
+        "content": "The workflow should feel like a small operating system for each episode.",
+        "createdAt": "2026-04-20T12:00:00.000Z"
+      }
+    ],
+    "createdAt": "2026-04-20T12:00:00.000Z",
+    "updatedAt": "2026-04-20T12:00:00.000Z"
+  },
+  "slides": [
+    {
+      "id": "slide-1",
+      "eyebrow": "Thesis",
+      "title": "Podcast production needs an operating layer",
+      "body": "The strongest teams are not only recording better conversations. They are building repeatable systems for moving from raw material to finished editorial assets.",
+      "bullets": ["Research", "Brief", "Presentation"],
+      "speakerNotes": "Open by naming the pain: source material is everywhere and the team loses time reconstructing context."
+    },
+    {
+      "id": "slide-2",
+      "eyebrow": "Problem",
+      "title": "The handoff tax slows every episode",
+      "body": "Notes live in one place, links in another, transcripts in another, and the episode narrative gets rebuilt manually for every format.",
+      "bullets": ["Scattered sources", "Weak continuity", "Manual remixing"],
+      "speakerNotes": "Frame this as an editorial problem, not just a tooling inconvenience."
+    },
+    {
+      "id": "slide-3",
+      "eyebrow": "Workflow",
+      "title": "A brief should become the source of truth",
+      "body": "When the brief captures thesis, audience, key questions, and source evidence, it can power scripts, guest prep, show notes, and presentation slides.",
+      "bullets": ["Thesis-led", "Source-backed", "Reusable"],
+      "speakerNotes": "Explain how structure preserves creative intent while reducing production overhead."
+    },
+    {
+      "id": "slide-4",
+      "eyebrow": "MVP",
+      "title": "Start local, keep the path open",
+      "body": "The first version does not need auth, a database, or a CMS. Local JSON, clear schemas, and web-native rendering are enough to prove the workflow.",
+      "bullets": ["No database", "Typed schemas", "Portable output"],
+      "speakerNotes": "Close with the product strategy: validate the operating model before adding infrastructure."
+    }
+  ]
+}
