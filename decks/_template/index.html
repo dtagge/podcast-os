@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New deck</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+      color: #f7f5f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    /* Stage renders at 1280x720 internally and scales to fit any viewport.
+       Riverside captures whatever the window is, so this gives a clean 16:9. */
+    .stage {
+      position: relative;
+      width: 1280px;
+      height: 720px;
+      transform-origin: center center;
+      background: #1B2A4A;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      padding: 72px;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .slide.active { display: flex; }
+
+    h1 {
+      font-family: ui-serif, Georgia, "Iowan Old Style", serif;
+      font-size: 64px;
+      font-weight: 600;
+      letter-spacing: -1px;
+      line-height: 1.05;
+      color: #fff;
+    }
+    h2 {
+      font-family: ui-serif, Georgia, serif;
+      font-size: 40px;
+      font-weight: 600;
+      line-height: 1.1;
+      color: #fff;
+    }
+    .eyebrow {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #C9A227;
+      margin-bottom: 18px;
+    }
+    p {
+      font-size: 22px;
+      line-height: 1.5;
+      color: rgba(247, 245, 240, 0.85);
+      margin-top: 14px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      height: 100%;
+    }
+
+    /* Video slot: hidden until the file actually loads. Drop video-one.mp4
+       (or video-two.mp4, etc.) into this folder and the slot reveals itself. */
+    .video-slot {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 6px;
+      overflow: hidden;
+      display: none;
+    }
+    .video-slot.loaded { display: block; }
+    .video-slot video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .progress {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 10;
+    }
+    .progress > div {
+      height: 100%;
+      background: #C9A227;
+      transition: width 300ms ease-out;
+    }
+  </style>
+</head>
+<body>
+
+<!--
+  CONVENTION
+  ==========
+  Drop video files into this folder with these exact names:
+
+      video-one.mp4     video-four.mp4
+      video-two.mp4     video-five.mp4
+      video-three.mp4   video-six.mp4
+
+  Reference them with <video src="video-one.mp4" ...>.
+  Each slot below is hidden until the matching file is present, so empty
+  slots simply don't render. Edit slide markup freely.
+-->
+
+<div class="stage">
+
+  <!-- ===== Slide 1: title ===== -->
+  <section class="slide">
+    <p class="eyebrow">Episode 1</p>
+    <h1>Title goes here</h1>
+    <p>A short subtitle or thesis. Replace this with anything.</p>
+  </section>
+
+  <!-- ===== Slide 2: text + video-one ===== -->
+  <section class="slide">
+    <div class="row">
+      <div>
+        <p class="eyebrow">Slide 2</p>
+        <h2>Two-column with video-one</h2>
+        <p>Drop <code>video-one.mp4</code> into this folder. The slot on the right reveals itself.</p>
+      </div>
+      <div class="video-slot">
+        <video src="video-one.mp4" autoplay loop muted playsinline></video>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Slide 3: text + video-two ===== -->
+  <section class="slide">
+    <div class="row">
+      <div>
+        <p class="eyebrow">Slide 3</p>
+        <h2>Another point</h2>
+        <p>This slide is ready for <code>video-two.mp4</code> on the right.</p>
+      </div>
+      <div class="video-slot">
+        <video src="video-two.mp4" autoplay loop muted playsinline></video>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Slide 4: full-bleed video-three ===== -->
+  <section class="slide" style="padding: 0;">
+    <div class="video-slot" style="aspect-ratio: auto; height: 100%;">
+      <video src="video-three.mp4" autoplay loop muted playsinline></video>
+    </div>
+  </section>
+
+  <!-- ===== Slide 5: text + video-four ===== -->
+  <section class="slide">
+    <div class="row">
+      <div>
+        <p class="eyebrow">Slide 5</p>
+        <h2>Continue the arc</h2>
+        <p>Drop <code>video-four.mp4</code> in to fill the right column.</p>
+      </div>
+      <div class="video-slot">
+        <video src="video-four.mp4" autoplay loop muted playsinline></video>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Slide 6: closer ===== -->
+  <section class="slide">
+    <p class="eyebrow">Up next</p>
+    <h1>Closing or teaser</h1>
+    <p>End on a clean text slide, or copy a video-slot row from above.</p>
+  </section>
+
+  <div class="progress"><div id="progress-bar"></div></div>
+</div>
+
+<script>
+(function () {
+  var stage = document.querySelector('.stage');
+  var slides = stage.querySelectorAll('.slide');
+  var total = slides.length;
+  var index = 0;
+  var bar = document.getElementById('progress-bar');
+
+  slides[0].classList.add('active');
+  update();
+
+  function fit() {
+    var scale = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+    stage.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  fit();
+
+  function update() {
+    bar.style.width = (((index + 1) / total) * 100) + '%';
+  }
+
+  function show(i) {
+    if (i < 0 || i >= total) return;
+    slides[index].classList.remove('active');
+    slides[index].querySelectorAll('video').forEach(function (v) { v.pause(); });
+    index = i;
+    slides[index].classList.add('active');
+    slides[index].querySelectorAll('video[autoplay]').forEach(function (v) {
+      v.play().catch(function () {});
+    });
+    update();
+  }
+
+  // Reveal each video slot only if its file actually loads.
+  document.querySelectorAll('.video-slot').forEach(function (slot) {
+    var v = slot.querySelector('video');
+    if (!v) return;
+    v.addEventListener('loadeddata', function () { slot.classList.add('loaded'); });
+    v.addEventListener('error', function () { slot.classList.remove('loaded'); });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    switch (e.key) {
+      case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown':
+        e.preventDefault(); show(index + 1); break;
+      case 'ArrowLeft': case 'ArrowUp': case 'PageUp':
+        e.preventDefault(); show(index - 1); break;
+      case 'Home': e.preventDefault(); show(0); break;
+      case 'End': e.preventDefault(); show(total - 1); break;
+      case 'f': case 'F':
+        if (document.fullscreenElement) document.exitFullscreen();
+        else document.documentElement.requestFullscreen();
+        break;
+    }
+  });
+
+  document.addEventListener('click', function () { show(index + 1); });
+})();
+</script>
+
+</body>
+</html>
